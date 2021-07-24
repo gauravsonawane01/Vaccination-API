@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+  <table id="data" class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Phone Number</th>
+        <th>Age</th>
+        <th>Date</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function () {
+      $('#data').DataTable({
+        ajax: '/api/data',
+        columns: [
+          {data: 'id', searchable: false},
+          {data: 'phoneNumber', searchable: false},
+          {data: 'age', searchable: false},
+          {data: 'date', orderable: false, searchable: false},
+          {data: 'city', orderable: false},
+          {data: 'state'},
+          {data: 'zip'}
+        ],
+      });
+    });
+  </script>
+{% endblock %}

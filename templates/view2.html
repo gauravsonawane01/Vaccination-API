@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Admin Panel</title>
+	<!-- Include Font Awesome -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+	<!-- Style -->
+	<style type="text/css">
+		body {
+			font-family: "Trebuchet MS", Helvetica, sans-serif;
+			 background-color:#fafafa;
+		}
+		a {
+			text-decoration: none;
+		}
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+		table, th, td {
+		   border: 1px solid #bbb;
+		   text-align: left;
+		}
+		tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+		th {
+			background-color: #ddd;
+		}
+		th,td {
+			padding: 5px;
+		}
+		button {
+			cursor: pointer;
+		}
+		/*Initial style sort*/
+		.tablemanager th.sorterHeader {
+			cursor: pointer;
+		}
+		.tablemanager th.sorterHeader:after {
+			content: " \f0dc";
+			font-family: "FontAwesome";
+		}
+		/*Style sort desc*/
+		.tablemanager th.sortingDesc:after {
+			content: " \f0dd";
+			font-family: "FontAwesome";
+		}
+		/*Style sort asc*/
+		.tablemanager th.sortingAsc:after {
+			content: " \f0de";
+			font-family: "FontAwesome";
+		}
+		/*Style disabled*/
+		.tablemanager th.disableSort {
+
+		}
+		#for_numrows {
+			padding: 10px;
+			float: left;
+		}
+		#for_filter_by {
+			padding: 10px;
+			float: right;
+		}
+		#pagesControllers {
+			display: block;
+			text-align: center;
+		}
+
+		nav {
+  background: #222;
+  padding: 5px 20px;
+}
+ul {
+  list-style-type: none;
+}
+a {
+  color: white;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.logo a:hover {
+  text-decoration: none;
+}
+.menu li {
+  font-size: 16px;
+  padding: 15px 5px;
+  white-space: nowrap;
+}
+.logo a,
+.toggle a {
+  font-size: 20px;
+}
+.button.secondary {
+  border-bottom: 1px #444 solid;
+}
+
+/* Mobile menu */
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.toggle {
+  order: 1;
+}
+.item.button {
+  order: 2;
+}
+.item {
+  width: 100%;
+  text-align: center;
+  order: 3;
+  display: none;
+}
+.item.active {
+  display: block;
+}
+
+/* Navbar Toggle */
+.toggle {
+  cursor:pointer;
+}
+.bars {
+  background: #999;
+  display: inline-block;
+  height: 2px;
+  position: relative;
+  transition: background .2s ease-out;
+  width: 18px;
+}
+.bars:before,
+.bars:after {
+  background: #999;
+  content: '';
+  display: block;
+  height: 100%;
+  position: absolute;
+  transition: all .2s ease-out;
+  width: 100%;
+}
+.bars:before {
+  top: 5px;
+}
+.bars:after {
+  top: -5px;
+}
+
+/* Tablet menu */
+@media all and (min-width: 468px) {
+  .menu {
+      justify-content: center;
+  }
+
+  .logo {
+      flex: 1;
+  }
+
+  .item.button {
+      width: auto;
+      order: 1;
+      display: block;
+  }
+  .toggle {
+      order: 2;
+  }
+  .button.secondary {
+      border: 0;
+  }
+  .button a {
+      padding: 7.5px 15px;
+      background: teal;
+      border: 1px #006d6d solid;
+      border-radius:50em;
+  }
+  .button.secondary a {
+      background: transparent;
+  }
+  .button a:hover {
+      text-decoration: none;
+      transition:all .25s;
+  }
+  .button:not(.secondary) a:hover {
+      background: #006d6d;
+      border-color: #005959;
+  }
+  .button.secondary a:hover {
+      color: #ddd;
+  }
+}
+
+/* Desktop menu */
+@media all and (min-width: 768px) {
+  .item {
+      display: block;
+      width: auto;
+  }
+  .toggle {
+      display: none;
+  }
+  .logo {
+      order: 0;
+  }
+  .item {
+      order: 1;
+  }
+  .button {
+      order: 2;
+  }
+  .menu li {
+      padding: 15px 10px;
+  }
+  .menu li.button {
+      padding-right: 0;
+  }
+}
+	</style>
+</head>
+<body>
+	<header>
+		<nav>
+        <ul class="menu">
+
+            <li class="item"><a href="{{ url_for('home') }}">Home</a></li>
+            <li class="item"><a href="#">About</a></li>
+            <li class="item"><a href="#">Contact Us</a></li>
+            </li>
+            <li class="item button"><a href="{{ url_for('login') }}">Log In</a></li>
+            <li class="item button secondary"><a href="{{ url_for('register') }}">Sign Up</a></li>
+            <li class="toggle"><span class="bars"></span></li>
+        </ul>
+    </nav>
+		<h1>Admin Panel</h1>
+		<h4></h4>
+		<p>
+			Visit Official Website : <a href="https://www.cowin.gov.in/" target="_blank" style="color:#FF0000;">Click Here</a>
+		</p>
+		<p>
+			Users Information
+		</p>
+		<hr>
+	</header>
+
+	<!-- Table start -->
+    <table class="tablemanager">
+		<div id="for_numrows" class="for_numrows" style="display: inline;"><label>Filter by age :
+<select name="portfolio" id="portfolio">
+<option value="#" selected="selected">Select</option>
+<option value="{{ url_for('view') }}">All</option>
+<option value="{{ url_for('filter1845') }}">18 to 45</option>
+<option href="#" value="{{ url_for('filter45') }}">45+</option>
+</select>
+
+
+
+<script type ="text/javascript">
+var urlMenu = document.getElementById('portfolio');
+urlMenu.onchange = function()
+{
+var userOption = this.options[this.selectedIndex];
+if (userOption.value != "nothing")
+{
+window.location.replace(userOption.value, "HTML CSS javascript", "");
+}
+
+}
+
+</script></label></div>
+    	<thead>
+    		<tr>
+                <th class="disableSort">ID</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Age</th>
+				<th>City</th>
+				<th>State</th>
+			</tr>
+    	</thead>
+		<tbody>
+			{% for row in rows %}
+
+                <tr>
+
+                    <td>{{row[0]}}</td>
+                    <td>{{row[1]}}</td>
+                    <td>{{row[2]}}</td>
+                    <td>{{row[3]}}</td>
+                    <td>{{row[4]}}</td>
+					<td>{{row[5]}}</td>
+
+
+                </tr>
+
+                {% endfor %}
+		</tbody>
+	</table>
+
+	<footer style="text-align: right;">
+		<hr>
+		Vaccination API | Copyright © 2021
+	</footer>
+
+    <!-- External jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<!-- <script type="text/javascript" src="./js/jquery-1.12.3.min.js"></script> -->
+	<script type="text/javascript" src="{{url_for('static', filename='tableManager.js')}}"></script>
+	<script type="text/javascript">
+		// basic usage
+		$('.tablemanager').tablemanager({
+			firstSort: [[3,0],[2,0],[1,'asc']],
+			disable: ["last"],
+			appendFilterby: true,
+			dateFormat: [[4,"dd-mm-yyyy"]],
+			debug: true,
+			vocabulary: {
+				voc_filter_by: 'Filter by',
+				voc_type_here_filter: 'Search here',
+				voc_show_rows: 'Show entries '
+			},
+			pagination: true,
+			showrows: [5,10,20,50,100],
+			disableFilterBy: [1]
+		});
+		// $('.tablemanager').tablemanager();
+		var urlMenu = document.getElementById('numrows1');
+		urlMenu.onchange = function() {
+			var userOption = this.options(this.selectedIndex);
+			if (userOption.value != "nothing"){
+				window.open(userOption.value, " Cowin Page", "");
+			}
+		}
+	</script>
+	<script type="text/javascript">
+
+	</script>
+</body>
+</html>

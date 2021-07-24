@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+<form name="webpage">
+<select name="portfolio" id="portfolio">
+<option value="#" disabled selected>HTML</option>
+<option value="css.html" selected="selected">CSS</option>
+<option href="#" value="JavaScript.html">JAVASCRIPT</option>
+<option href="#" value="https://www.youtube.com/channel/UCjMpsBpg8uv6kjPOyJuTmww">youtube</option>
+</select>
+</form>
+
+
+<script type ="text/javascript">
+var urlMenu = document.getElementById('portfolio');
+urlMenu.onchange = function()
+{
+var userOption = this.options[this.selectedIndex];
+if (userOption.value != "nothing")
+{
+window.open(userOption.value, "HTML CSS javascript", "");
+}
+
+}
+
+</script>
+</body>
+</html>
